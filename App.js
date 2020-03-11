@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
-import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {Provider} from 'react-redux';
 
 import store from './src/components/redux/store';
@@ -11,13 +10,12 @@ import ProductScreen from './src/components/Product/productScreen';
 import EditProductScreen from './src/components/Product/editProduct';
 import DrinkScreen from './src/components/Product/drinkScreen';
 import FoodScreen from './src/components/Product/foodScreen';
-// const tabNavigator = createBottomTabNavigator({
-//   Home: HomeScreen,
-//   Product: ProductScreen,
-// });
+import LoginScreen from './src/components/auth/Login';
+
 
 const homeNavigator = createStackNavigator({
-  Home: HomeScreen,
+  Home: LoginScreen,
+  HomeScreen: HomeScreen,
   Product: ProductScreen,
   AddProduct: AddProductScreen,
   EditProduct: EditProductScreen,

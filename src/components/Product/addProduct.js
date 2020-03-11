@@ -40,12 +40,6 @@ class AddProduct extends Component {
                 onChangeText={text => this.setState({description: text})}
               />
             </Item>
-            {/* <Item>
-                  <Input
-                    placeholder="image"
-                    onChangeText={text => this.setState({image: text})}
-                  />
-                </Item> */}
             <Item>
               <Input
                 placeholder="category"

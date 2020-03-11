@@ -47,7 +47,7 @@ class EditProduct extends Component{
                             <Input placeholder="description" onChangeText={(text) => this.setState({ description: text })} value={this.state.description} />
                         </Item>
                         <Item>
-                            <Input placeholder="category" onChangeText={(text) => this.setState({ category: text })} value={this.state.category} />
+                            <Input placeholder="category" onChangeText={(text) => this.setState({ category: text })} value={`$this.state.category`} />
                         </Item>
                         <Item>
                             <Input placeholder="price" onChangeText={(text) => this.setState({ price: text })} value= {`${this.state.price}`} />

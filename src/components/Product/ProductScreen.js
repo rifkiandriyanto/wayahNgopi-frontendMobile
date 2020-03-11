@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, Image, Text, FlatList, TouchableOpacity} from 'react-native';
+import {View, TextInput, Text, TouchableOpacity, FlatList, Image} from 'react-native';
 import Spinner from '../Spinner/Spinner';
+import {SearchBar} from 'react-native-elements';
 
 import {getProducts, deleteProduct} from '../redux/actions/product';
 
@@ -14,7 +15,7 @@ class ProductScreen extends Component {
     activePage: 1,
     sort: 'id',
     by: 'ASC',
-    serachName: '',
+    searchName: '',
     activeCategory: '',
   };
 
@@ -45,6 +46,17 @@ class ProductScreen extends Component {
     const data = {};
     await this.props.dispatch(getProducts(data));
   }
+
+  onChangeSearch = event => {
+    const data = {
+      activePage: 1,
+      activeCategory: "",
+      searchName: event,
+      sort: this.state.sort,
+      by: this.state.by
+    };
+    this.props.dispatch(getProducts(data));
+  };
 
   onSubmit = async productId => {
     await this.props.dispatch(deleteProduct(productId));
@@ -85,7 +97,8 @@ class ProductScreen extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={{marginLeft: 10}}
-              onPress={this.onSubmit.bind(this, item.id)}><Text style={{fontSize: 17, color: 'red'}}>Delete</Text>
+              onPress={this.onSubmit.bind(this, item.id)}>
+              <Text style={{fontSize: 17, color: 'red'}}>Delete</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -98,6 +111,11 @@ class ProductScreen extends Component {
 
     return (
       <View>
+        <TextInput
+          style={{borderWidth:1, borderColor:'#d2d9d5', borderRadius:25, paddingLeft:45, marginTop:30}}
+          placeholder="Search..."
+          onChangeText={ event => this.onChangeSearch (event) }
+        />
         <Spinner isLoading={products.isLoading} />
         <View style={{marginTop: 10, marginLeft: 10, marginBottom: 10}}>
           <FlatList

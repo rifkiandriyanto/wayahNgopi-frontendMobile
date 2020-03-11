@@ -5,10 +5,7 @@ import Spinner from '../Spinner/Spinner';
 
 import {getProducts, deleteProduct} from '../redux/actions/product';
 
-class ProductScreen extends Component {
-  static navigationOptions = {
-    title: 'Product',
-  };
+class DrinkScreen extends Component {
 
   state = {
     activePage: 1,
@@ -42,7 +39,7 @@ class ProductScreen extends Component {
   }
 
   async getProducts() {
-    const data = {};
+    const data = {activeCategory: "drink"};
     await this.props.dispatch(getProducts(data));
   }
 
@@ -119,4 +116,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(ProductScreen);
+export default connect(mapStateToProps)(DrinkScreen);

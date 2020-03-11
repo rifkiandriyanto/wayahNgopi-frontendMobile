@@ -1,113 +1,82 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { View, Image, Text, FlatList, TouchableOpacity } from 'react-native';
-import Spinner from '../Spinner/Spinner';
+// import { connect } from 'react-redux';
+// import Spinner from '../Spinner/Spinner';
+import { View, TextInput, Image, Button,Text } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 // import { SearchBar } from 'react-native-elements';
 
-import { getProducts } from '../redux/actions/product'
+// import { getProducts } from '../redux/actions/product'
 
 class HomeScreen extends Component{
-
-    state = {
-        activePage: 1,
-        sort: "id",
-        by: "ASC",
-        serachName: "",
-        activeCategory: ""
-      };
-
-    static navigationOptions = ({ navigation }) => {
-        return{
-            headerRight: () => (
-                <TouchableOpacity 
-                        style={{ backgroundColor: '#1C3F94', padding: 8, justifyContent: 'center', alignItems: 'center', width: 100, marginRight: 20}}
-                        onPress={() => navigation.navigate('addProduct')}>
-                            <Text style={{ color: "#fff" }}>Add Product</Text>
-                </TouchableOpacity>
-                
-            ),
-        }
-    }
-
-    // onChangeSearch = e => {
-    //     this.setState({ serachName: e.target.value });
-    //     const data = {
-    //       activePage: 1,
-    //       activeCategory: "",
-    //       serachName: e.target.value,
-    //       sort: this.state.sort,
-    //       by: this.state.by
-    //     };
-    //     this.props.dispatch(getProducts(data));
-    //   };
-
-    componentDidMount(){
-        
-        this.getProducts();
-    }
-
-     async getProducts() {
-        const data = {};
-        await this.props.dispatch(getProducts(data));
-    }
-
-    onRefreshing = () => {
-        this.getProducts();
-    }
-
-    renderRow = ({item}) => {
-        return(
-
-
-            <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10, borderBottomWidth:1, borderBottomColor: "rgba(0,0,0,.1)", height: 110 }}>
-               {/* <SearchBar
-                type="search"
-                placeholder="Search"
-                onChangeText={this.onChangeSearch}
-              /> */}
-                <Image source={{uri: item.image}} style={{ width: 100, height: 100}} />
-                <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <Text style={{ fontSize: 18, marginLeft: 10, marginBottom: 5 }}>{item.name}</Text>
-                    <Text style={{ fontSize: 15, marginLeft: 10, marginBottom: 18 }}>Stock {item.stock}</Text>
-                    <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity style={{ marginLeft: 10 }} onPress={() => this.props.navigation.navigate('EditProduct', {
-                            product: item
-                        })}>
-                            <Text style={{ fontSize: 17, color: "orange" }}>Edit</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={{ marginLeft: 10 }}>
-                            <Text style={{ fontSize: 17, color: "red" }}>Delete</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
-        )
-    }
-
     render(){
-        const {products} = this.props;
-
-        return(
+      return(
+        <View style={{backgroundColor:'lightblue',flex:1}}>
+          <View style={{flex:1, backgroundColor:'white'}}>
             <View>
-                <Spinner isLoading={products.isLoading} />
-                <View style={{ marginTop: 10, marginLeft: 10, marginBottom: 10 }}>
-                    <FlatList 
-                        data={products.products}
-                        renderItem={this.renderRow}
-                        refreshing={products.isLoading}
-                        onRefresh={this.onRefreshing}
-                        keyExtractor={(item) => item.id.toString()}
-                    />
+              <View style={{position:'relative', marginHorizontal:17}}>
+                <TextInput placeholder="Search..." style={{borderWidth:1, borderColor:'#d2d9d5', borderRadius:25, paddingLeft:45, marginTop:30}} />
+                {/* <Image source={require('../../../../img/icon/search.png')} style={{position:'absolute', top:45, left:12}} /> */}
+              </View>
+              <View style={{backgroundColor:'#2933E9', marginHorizontal:17,borderTopLeftRadius:10,borderTopRightRadius:10, marginTop:15}}>
+                <Text style={{padding:8,color:'white'}}>Category</Text>
+              </View>
+              <View style={{justifyContent:'center',alignItems:'center',flexDirection:'row',padding:10,backgroundColor:'#d2d9d5', marginHorizontal:17,borderBottomLeftRadius:10,borderBottomRightRadius:10}}>
+                <View style={{marginLeft:10,justifyContent:"center", alignItems:'center',borderRadius:10, width:40, height:40, backgroundColor:'white'}}>
+                  <Text>Food</Text>
                 </View>
+                <View style={{marginLeft:10,justifyContent:"center", alignItems:'center',borderRadius:10, width:40, height:40, backgroundColor:'white'}}>
+                  <Text>Drink</Text>
+                </View>
+                <View style={{marginLeft:10,justifyContent:"center", alignItems:'center',borderRadius:10, width:40, height:40, backgroundColor:'white'}}>
+                  <Text>Coffie</Text>
+                </View>
+                <View style={{marginLeft:10,justifyContent:"center", alignItems:'center',borderRadius:10, width:40, height:40, backgroundColor:'white'}}>
+                  <Text>Drink</Text>
+                </View>
+              </View>
             </View>
-        )
+            <View style={{borderRadius:10,justifyContent:'center',alignItems:'center',marginHorizontal:17, marginTop:30, backgroundColor:'blue', flexDirection:'row', flexWrap:'wrap',padding:10}}>
+              <View style={{margin:5,borderRadius:30,backgroundColor:'#E9E9E9',justifyContent:'center',alignItems:'center',width:100,height:100}}>
+                <Text>Item 1</Text>
+              </View>
+              <View style={{margin:5,borderRadius:30,backgroundColor:'#E9E9E9',justifyContent:'center',alignItems:'center',width:100,height:100}}>
+                <Text>Item 2</Text>
+              </View>
+              <View style={{margin:5,borderRadius:30,backgroundColor:'#E9E9E9',justifyContent:'center',alignItems:'center',width:100,height:100}}>
+                <Text>Item 3</Text>
+              </View>
+              <View style={{margin:5,borderRadius:30,backgroundColor:'#E9E9E9',justifyContent:'center',alignItems:'center',width:100,height:100}}>
+                <Text>Item 4</Text>
+              </View>
+            </View>
+          </View>
+          <View style={{height:54, backgroundColor:'yellow', flexDirection:'row'}}>
+             <View style={{backgroundColor:'white', flex:1, alignItems:'center', justifyContent:"center"}}>
+             <TouchableOpacity onPress={() => this.props.navigation.navigate('Home')} style={{backgroundColor:'white', flex:1, alignItems:'center', justifyContent:"center"}}>
+              <Text style={{fontSize:10, color:"#545454", marginTop:4}}>Home</Text>
+              </TouchableOpacity>
+  
+            </View>
+            <View style={{backgroundColor:'white', flex:1, alignItems:'center', justifyContent:"center"}}>
+              <Text style={{fontSize:10, color:"#545454", marginTop:4}}>Orders</Text>
+  
+            </View>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Product')} style={{backgroundColor:'white', flex:1, alignItems:'center', justifyContent:"center"}}>
+              <Text style={{fontSize:10, color:"#545454", marginTop:4}}>Products</Text>
+            </TouchableOpacity>
+            
+            <View style={{backgroundColor:'white', flex:1, alignItems:'center', justifyContent:"center"}}>
+              <Text style={{fontSize:10, color:"#545454", marginTop:4}}>Inbox</Text>
+  
+            </View>
+            <View style={{backgroundColor:'white', flex:1, alignItems:'center', justifyContent:"center"}}>
+              <Text style={{fontSize:10, color:"#545454", marginTop:4}}>Account</Text>
+  
+            </View>
+          </View>
+        </View>
+      )
     }
-}
-
-const mapStateToProps = (state) => {
-    return{
-        products: state.products
-    }
-}
-
-export default connect(mapStateToProps)(HomeScreen);
+  }
+  
+  export default HomeScreen;

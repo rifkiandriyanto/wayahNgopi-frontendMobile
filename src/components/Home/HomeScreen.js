@@ -1,24 +1,17 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import { postCart } from '../redux/actions/cart'
+import {postCart} from '../redux/actions/cart';
 import {
   TextInput,
   FlatList,
   View,
   Image,
   TouchableOpacity,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 
-import { 
-  Button,
-  Text,
-  Card,
-  CardItem,
-  Thumbnail,
-  Badge} from 'native-base'
+import {Button, Text, Card, CardItem, Thumbnail, Badge, Icon} from 'native-base';
 import Spinner from '../Spinner/Spinner';
-import {SearchBar} from 'react-native-elements';
 
 import {getProducts, deleteProduct} from '../redux/actions/product';
 
@@ -105,12 +98,11 @@ class HomeScreen extends Component {
         <View style={{padding: 10, width: 155}}>
           <Text style={{color: '#777', paddingTop: 0}}>{item.name}</Text>
           <Text style={{color: '#777', paddingTop: 0}}>Rp.{item.price}</Text>
-          <Button  small bordered info onPress={() => this.addToCart(item)}>
-          <Text> Add to cart </Text>
+          <Button small bordered info onPress={() => this.addToCart(item)}>
+            <Text> Add to cart </Text>
           </Button>
         </View>
       </View>
-      
     );
   };
 
@@ -142,17 +134,35 @@ class HomeScreen extends Component {
             keyExtractor={item => item.id.toString()}
           />
 
-<View
-          style={{height: 54, backgroundColor: 'yellow', flexDirection: 'row'}}>
           <View
             style={{
-              backgroundColor: 'white',
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
+              height: 54,
+              backgroundColor: 'yellow',
+              flexDirection: 'row',
             }}>
+            <View
+              style={{
+                backgroundColor: 'white',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('Home')}
+                >
+                <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
+                  Home
+                </Text>
+              </TouchableOpacity>
+            </View>
+
+            <Button vertical>
+              <Icon name="camera" />
+              <Text>Camera</Text>
+            </Button>
+
             <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Home')}
+              onPress={() => this.props.navigation.navigate('Product')}
               style={{
                 backgroundColor: 'white',
                 flex: 1,
@@ -160,54 +170,39 @@ class HomeScreen extends Component {
                 justifyContent: 'center',
               }}>
               <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-                Home
+                Products
               </Text>
             </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Category')}
+              style={{
+                backgroundColor: 'white',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
+                Category
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Cart')}
+              style={{
+                backgroundColor: 'white',
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
+                Cart
+              </Text>
+              <Badge>
+                <Text>{this.props.totalPurchase}</Text>
+              </Badge>
+            </TouchableOpacity>
           </View>
-   
-          <TouchableOpacity
-            onPress={() => this.props.navigation.navigate('Product')}
-            style={{
-              backgroundColor: 'white',
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-              Products
-            </Text>
-          </TouchableOpacity>
-
-
-          <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Category')}
-            style={{
-              backgroundColor: 'white',
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-              Category
-            </Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-          onPress={() => this.props.navigation.navigate('Cart')}
-            style={{
-              backgroundColor: 'white',
-              flex: 1,
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-              Cart
-            </Text>
-            <Badge><Text>{this.props.totalPurchase}</Text></Badge>
-          </TouchableOpacity>
-        </View>
-
-
         </View>
       </ScrollView>
     );
@@ -218,8 +213,7 @@ const mapStateToProps = state => {
   return {
     products: state.products,
     productsInCart: state.cart.cart,
-    totalPurchase: state.cart.totalPurchase
-    
+    totalPurchase: state.cart.totalPurchase,
   };
 };
 

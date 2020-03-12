@@ -11,6 +11,9 @@ import EditProductScreen from './src/components/Product/editProduct';
 import DrinkScreen from './src/components/Product/drinkScreen';
 import FoodScreen from './src/components/Product/foodScreen';
 import LoginScreen from './src/components/auth/Login';
+import categoryScreen from './src/components/Category/categoryScreen';
+import AddCategoryScreen from './src/components/Category/addCategory';
+import EditCategoryScreen from './src/components/Category/editCategory';
 
 
 const homeNavigator = createStackNavigator({
@@ -21,6 +24,9 @@ const homeNavigator = createStackNavigator({
   EditProduct: EditProductScreen,
   Drink: DrinkScreen,
   Food: FoodScreen,
+  Category: categoryScreen,
+  AddCategory: AddCategoryScreen,
+  EditCategory: EditCategoryScreen,
 });
 
 const AppNavigator = createSwitchNavigator({

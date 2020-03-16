@@ -34,7 +34,7 @@ class Login extends Component {
     e.preventDefault();
 
     axios
-      .post('http://192.168.1.20:8006/user/login', this.state)
+      .post('http://192.168.1.21:8006/user/login', this.state)
       .then(res => {
         console.log(res.data);
         AsyncStorage.setItem('token', res.data.token);

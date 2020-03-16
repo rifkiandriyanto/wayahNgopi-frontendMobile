@@ -2,8 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, TextInput, Text, TouchableOpacity, FlatList, Image} from 'react-native';
 import Spinner from '../Spinner/Spinner';
-import {SearchBar} from 'react-native-elements';
-
 import {getProducts, deleteProduct} from '../redux/actions/product';
 
 class ProductScreen extends Component {

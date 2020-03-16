@@ -10,10 +10,18 @@ import {
   ScrollView,
 } from 'react-native';
 
-import {Button, Text, Card, CardItem, Thumbnail, Badge, Icon} from 'native-base';
+import {
+  Button,
+  Text,
+  Card,
+  CardItem,
+  Thumbnail,
+  Badge,
+  Icon,
+} from 'native-base';
 import Spinner from '../Spinner/Spinner';
 
-import {getProducts, deleteProduct} from '../redux/actions/product';
+import {getProducts} from '../redux/actions/product';
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -70,9 +78,6 @@ class HomeScreen extends Component {
     }
   };
 
-  onSubmit = async productId => {
-    await this.props.dispatch(deleteProduct(productId));
-  };
 
   onRefreshing = () => {
     this.getProducts();
@@ -124,7 +129,7 @@ class HomeScreen extends Component {
           onChangeText={event => this.onChangeSearch(event)}
         />
         <Spinner isLoading={products.isLoading} />
-        <View style={{marginTop: 10, marginLeft: 10, marginBottom: 10}}>
+       
           <FlatList
             numColumns={2}
             data={products.products}
@@ -137,73 +142,44 @@ class HomeScreen extends Component {
           <View
             style={{
               height: 54,
-              backgroundColor: 'yellow',
               flexDirection: 'row',
+              justifyContent: 'center'
             }}>
-            <View
-              style={{
-                backgroundColor: 'white',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <TouchableOpacity
-                onPress={() => this.props.navigation.navigate('Home')}
-                >
-                <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-                  Home
-                </Text>
-              </TouchableOpacity>
-            </View>
-
-            <Button vertical>
-              <Icon name="camera" />
-              <Text>Camera</Text>
+            <Button
+              vertical
+              info
+              onPress={() => this.props.navigation.navigate('Home')}>
+              <Icon name="apps" />
+              <Text>Home</Text>
             </Button>
 
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Product')}
-              style={{
-                backgroundColor: 'white',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-                Products
-              </Text>
-            </TouchableOpacity>
+            <Button
+              vertical
+              info
+              onPress={() => this.props.navigation.navigate('Product')}>
+              <Icon name="folder" />
+              <Text>Products</Text>
+            </Button>
 
-            <TouchableOpacity
-              onPress={() => this.props.navigation.navigate('Category')}
-              style={{
-                backgroundColor: 'white',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-                Category
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
+            <Button
+              vertical
+              info
+              onPress={() => this.props.navigation.navigate('Category')}>
+              <Icon name="document" />
+              <Text>Category</Text>
+            </Button>
+                  
+            <Button active badge vertical info
               onPress={() => this.props.navigation.navigate('Cart')}
-              style={{
-                backgroundColor: 'white',
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Text style={{fontSize: 10, color: '#545454', marginTop: 4}}>
-                Cart
-              </Text>
-              <Badge>
+              >
+                 <Badge >
                 <Text>{this.props.totalPurchase}</Text>
               </Badge>
-            </TouchableOpacity>
+                <Icon active name="cart" style={{marginTop: -26}} />
+              <Text>Cart</Text>             
+            </Button>
           </View>
-        </View>
+       
       </ScrollView>
     );
   }

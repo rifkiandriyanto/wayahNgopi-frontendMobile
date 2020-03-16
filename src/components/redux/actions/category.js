@@ -5,7 +5,7 @@ export const getCategories = () => {
     type: "GET_CATEGORIES",
     payload: axios({
       method: "GET",
-      url: "http://192.168.1.20:8006/category"
+      url: "http://192.168.1.21:8006/category"
     })
   };
 };
@@ -15,7 +15,7 @@ export const postCategory = data => {
     type: "POST_CATEGORY",
     payload: axios({
       method: "POST",
-      url: "http://192.168.1.20:8006/category",
+      url: "http://192.168.1.21:8006/category",
       data: data
     })
   };
@@ -26,7 +26,7 @@ export const deleteCategory = categoryId => {
     type: "DELETE_CATEGORY",
     payload: axios({
       method: "DELETE",
-      url: `http://192.168.1.20:8006/category/${categoryId}`
+      url: `http://192.168.1.21:8006/category/${categoryId}`
     })
   };
 };
@@ -35,7 +35,7 @@ export const updateCategory = (categoryId, data) => {
     type: "UPDATE_CATEGORY",
     payload: axios({
       method: "PATCH",
-      url: `http://192.168.1.20:8006/category/${categoryId}`,
+      url: `http://192.168.1.21:8006/category/${categoryId}`,
       data: data
     })
   };

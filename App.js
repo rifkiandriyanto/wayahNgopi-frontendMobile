@@ -15,6 +15,7 @@ import categoryScreen from './src/components/Category/categoryScreen';
 import AddCategoryScreen from './src/components/Category/addCategory';
 import EditCategoryScreen from './src/components/Category/editCategory';
 import CartScreen from './src/components/Order/cart';
+import CheckoutScreen from './src/components/Order/checkout';
 
 
 const homeNavigator = createStackNavigator({
@@ -29,6 +30,7 @@ const homeNavigator = createStackNavigator({
   AddCategory: AddCategoryScreen,
   EditCategory: EditCategoryScreen,
   Cart: CartScreen,
+  Checkout: CheckoutScreen,
 });
 
 const AppNavigator = createSwitchNavigator({

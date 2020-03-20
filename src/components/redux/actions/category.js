@@ -1,11 +1,12 @@
 import axios from "axios";
+import {API_KEY} from 'react-native-dotenv';
 
 export const getCategories = () => {
   return {
     type: "GET_CATEGORIES",
     payload: axios({
       method: "GET",
-      url: "http://192.168.1.21:8006/category"
+      url: `${API_KEY}/category`
     })
   };
 };
@@ -15,7 +16,7 @@ export const postCategory = data => {
     type: "POST_CATEGORY",
     payload: axios({
       method: "POST",
-      url: "http://192.168.1.21:8006/category",
+      url: `${API_KEY}/category`,
       data: data
     })
   };
@@ -26,7 +27,7 @@ export const deleteCategory = categoryId => {
     type: "DELETE_CATEGORY",
     payload: axios({
       method: "DELETE",
-      url: `http://192.168.1.21:8006/category/${categoryId}`
+      url: `${API_KEY}/category/${categoryId}`
     })
   };
 };
@@ -35,7 +36,7 @@ export const updateCategory = (categoryId, data) => {
     type: "UPDATE_CATEGORY",
     payload: axios({
       method: "PATCH",
-      url: `http://192.168.1.21:8006/category/${categoryId}`,
+      url: `${API_KEY}/category/${categoryId}`,
       data: data
     })
   };

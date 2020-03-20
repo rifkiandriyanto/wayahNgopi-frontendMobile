@@ -1,4 +1,5 @@
 import axios from "axios";
+import {API_KEY} from 'react-native-dotenv';
 
 export const getProducts = data => {
   const limit = 6;
@@ -11,7 +12,7 @@ export const getProducts = data => {
     type: "GET_PRODUCTS",
     payload: axios({
       method: "GET",
-      url: `http://192.168.1.21:8006/product/?limit=${limit}&page=${page}&category=${category}&name=${name}&sortBy=${sortBy}&sort=${sort}`
+      url: `${API_KEY}/product/?limit=${limit}&page=${page}&category=${category}&name=${name}&sortBy=${sortBy}&sort=${sort}`
     })
   };
 };
@@ -21,7 +22,7 @@ export const postProduct = data => {
     type: "POST_PRODUCT",
     payload: axios({
       method: "POST",
-      url: "http://192.168.1.21:8006/product",
+      url: `${API_KEY}/product`,
       data: data
     })
   };
@@ -32,7 +33,7 @@ export const deleteProduct = productId => {
     type: "DELETE_PRODUCT",
     payload: axios({
       method: "DELETE",
-      url: `http://192.168.1.21:8006/product/${productId}`
+      url: `${API_KEY}/product/${productId}`
     })
   };
 };
@@ -42,7 +43,7 @@ export const updateProduct = (productId, data) => {
     type: "UPDATE_PRODUCT",
     payload: axios({
       method: "PATCH",
-      url: `http://192.168.1.21:8006/product/${productId}`,
+      url: `${API_KEY}/product/${productId}`,
       data: data
     })
   };

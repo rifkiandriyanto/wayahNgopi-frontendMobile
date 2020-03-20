@@ -1,21 +1,22 @@
-import axios from "axios";
+import axios from 'axios';
+import {API_KEY} from 'react-native-dotenv';
 
 export const getHistory = () => {
   return {
-    type: "GET_HISTORY",
+    type: 'GET_HISTORY',
     payload: axios({
-      method: "GET",
-      URL: "http://localhost:8006/transaction"
-    })
+      method: 'GET',
+      URL: `${API_KEY}/transaction`,
+    }),
   };
 };
 
 export const getDetailHistory = id => {
   return {
-    type: "GET_DETAIL_HISTORY",
+    type: 'GET_DETAIL_HISTORY',
     payload: axios({
-      method: "GET",
-      url: "http://localhost:8006/transaction" + id
-    })
+      method: 'GET',
+      url: `${API_KEY}/transaction` + id,
+    }),
   };
 };

@@ -23,7 +23,7 @@ const product = (state = initialState, action) => {
         ...state,
         isLoading: false,
         products: action.payload.data.result,
-        pages: action.payload.data.totalPages
+        // pages: action.payload.data.totalPages
       };
 
     case "DELETE_PRODUCT_PENDING":

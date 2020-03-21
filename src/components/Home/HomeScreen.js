@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {postCart} from '../redux/actions/cart';
+import {API_KEY} from 'react-native-dotenv';
 import {
   TextInput,
   FlatList,

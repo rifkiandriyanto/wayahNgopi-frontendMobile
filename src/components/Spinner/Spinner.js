@@ -1,6 +1,5 @@
 import React from 'react';
 import { ActivityIndicator, View, Modal } from 'react-native';
-// import { View } from 'native-base';
 
 const Spinner = ({isLoading}) => (
     <Modal

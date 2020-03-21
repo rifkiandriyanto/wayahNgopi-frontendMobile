@@ -1,103 +1,182 @@
 import React, {Component} from 'react';
-import {AsyncStorage} from 'react-native';
-import axios from 'axios';
+import {login} from '../redux/actions/auth';
 import {
-  View,
-  TextInput,
+  StyleSheet,
   Text,
-  TouchableOpacity,
-  Button,
+  View,
   Image,
+  Dimensions,
+  TextInput,
+  TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
+import {API_KEY} from 'react-native-dotenv';
+import {Icon} from 'native-base';
+import {connect} from 'react-redux';
+
+import {withNavigation} from 'react-navigation';
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-
+  static navigationOptions = {
+    tittle: null,
+  };
+  constructor() {
+    super();
     this.state = {
-      email: '',
-      password: '',
+      showPass: true,
+      press: false,
     };
   }
 
+  state = {
+    email: '',
+    password: '',
+  };
+
   componentDidMount() {
-    if (AsyncStorage.getItem('token')) {
-      console.log('haha');
+    if (this.props.auth.isAuthenticated) {
       this.props.navigation.navigate('HomeScreen');
-    } else {
-      this.props.navigation.navigation('LoginScreen');
     }
   }
 
-  onSubmit = e => {
-    console.log('OK');
-    e.preventDefault();
+  onSubmit = async e => {
+    console.log('ini submit', this.state);
+    await this.props.dispatch(login(this.state));
+    this.props.navigation.navigate('HomeScreen');
+  };
 
-    axios
-      .post('http://192.168.1.21:8006/user/login', this.state)
-      .then(res => {
-        console.log(res.data);
-        AsyncStorage.setItem('token', res.data.token);
-        AsyncStorage.setItem('user-id', res.data.id);
-        AsyncStorage.setItem('status', res.data.status);
-        AsyncStorage.setItem('isAuth', true);
-        this.props.navigation.navigate('HomeScreen');
-      })
-      .catch(err => {
-        console.log(err);
-      });
+  showPass = () => {
+    if (this.state.press === false) {
+      this.setState({showPass: false, press: true});
+    } else {
+      this.setState({showPass: true, press: false});
+    }
+  };
+
+  onChangeEmail = event => {
+    console.log(event);
+    this.setState({
+      email: event,
+    });
+  };
+
+  onChangePass = event => {
+    console.log(event);
+    this.setState({
+      password: event,
+    });
   };
 
   render() {
     return (
-      <View style={{backgroundColor: '#e8f1ff', flex: 1}}>
-        <View style={{alignItems: 'center', marginTop: 100}}>
-        <Image style={{width:135,height:135}} source={require('../Home/icon.png')} />
-          <Text style={{color: '#a3aebf', fontSize: 20, fontWeight: 'bold'}}>
-            Wayah Ngopi
-          </Text>
-        </View>
-        <View style={{alignItems: 'center', marginTop: 50, marginBottom: 25}}>
-          <TextInput
-            style={{
-              borderRadius: 15,
-              paddingHorizontal: 100,
-              borderWidth: 1,
-              borderColor: '#C5BEBE',
-              padding: 10,
-            }}
-            placeholder="Username"
-            onChangeText={text => this.setState({email: text})}
-          />
-          <TextInput
-            style={{
-              borderRadius: 15,
-              paddingHorizontal: 100,
-              borderWidth: 1,
-              borderColor: '#C5BEBE',
-              padding: 10,
-              marginTop: 10,
-            }}
-            placeholder="Password"
-            onChangeText={text => this.setState({password: text})}
-          />
+      <>
+        <View style={styles.logoContainer}>
+          {/* <Image source={logo} style={styles.logo} /> */}
         </View>
 
-        <View style={{marginHorizontal: 45}}>
-          <TouchableOpacity style={{alignItems: 'center',
-                justifyContent: 'center'}} onPress={this.onSubmit}>
-            <Text
-              style={{
-                backgroundColor: '#a3aebf',
-                borderRadius: 15
-              }}>
-              Login
-            </Text>
+        <View style={styles.inputContainer}>
+          <Icon name="user" size={27} color={'grey'} style={styles.inputIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder={'username'}
+            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            underlinedColorAndroid="transparent"
+            onChangeText={this.onChangeEmail}
+          />
+        </View>
+        <View style={styles.inputContainer}>
+          <Icon name="lock" size={27} color={'grey'} style={styles.inputIcon} />
+          <TextInput
+            style={styles.input}
+            placeholder={'password'}
+            secureTextEntry={this.state.showPass}
+            placeholderTextColor={'rgba(255,255,255,0.7)'}
+            underlinedColorAndroid="transparent"
+            onChangeText={this.onChangePass}
+          />
+
+          <TouchableOpacity
+            style={styles.btnEye}
+            onPress={this.showPass.bind(this)}>
+            <Icon
+              name={this.state.press === false ? 'eye' : 'eye-slash'}
+              size={27}
+              color={'grey'}
+            />
           </TouchableOpacity>
         </View>
-      </View>
+        <TouchableOpacity style={styles.btnLogin} onPress={this.onSubmit}>
+          <Text style={styles.text}>Login</Text>
+        </TouchableOpacity>
+
+        <View>
+          <Text>Don't have an account?</Text>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('Register')}>
+            <Text>Register</Text>
+          </TouchableOpacity>
+        </View>
+      </>
     );
   }
 }
+const mapStateToProps = state => {
+  return {
+    auth: state.auth,
+  };
+};
 
-export default Login;
+export default connect(mapStateToProps)(Login);
+
+const styles = StyleSheet.create({
+  backgroundContainer: {
+    flex: 1,
+    width: null,
+    height: null,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 290,
+    height: 290,
+    marginTop: -90,
+  },
+  logoContainer: {
+    alignItems: 'center',
+  },
+  input: {
+    height: 45,
+    borderRadius: 25,
+    fontSize: 18,
+    paddingLeft: 45,
+    backgroundColor: 'rgba(0, 0, 0, 0.35)',
+    color: 'rgba(255,255,255, 0.7)',
+    marginHorizontal: 25,
+  },
+  inputIcon: {
+    position: 'absolute',
+    top: 9,
+    left: 39,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  btnEye: {
+    position: 'absolute',
+    top: 7,
+    right: 39,
+  },
+  btnLogin: {
+    height: 45,
+    borderRadius: 25,
+    fontSize: 18,
+    backgroundColor: '#f1a98c',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
+  text: {
+    color: 'white',
+    fontSize: 18,
+    textAlign: 'center',
+  },
+});

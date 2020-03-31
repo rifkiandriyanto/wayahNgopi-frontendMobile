@@ -12,13 +12,15 @@ import {
 } from 'react-native';
 
 import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  FooterTab,
   Button,
-  Text,
-  Card,
-  CardItem,
-  Thumbnail,
-  Badge,
   Icon,
+  Text,
+  Badge,
 } from 'native-base';
 import Spinner from '../Spinner/Spinner';
 
@@ -79,7 +81,6 @@ class HomeScreen extends Component {
     }
   };
 
-
   onRefreshing = () => {
     this.getProducts();
   };
@@ -117,6 +118,7 @@ class HomeScreen extends Component {
     const {products} = this.props;
 
     return (
+      <View style={{flex: 1, flexDirection: 'column'}}>
       <ScrollView>
         <TextInput
           style={{
@@ -130,61 +132,64 @@ class HomeScreen extends Component {
           onChangeText={event => this.onChangeSearch(event)}
         />
         <Spinner isLoading={products.isLoading} />
+
+        
+        <FlatList
+          numColumns={2}
+          data={products.products}
+          renderItem={this.renderRow}
+          refreshing={products.isLoading}
+          onRefresh={this.onRefreshing}
+          keyExtractor={item => item.id.toString()}
+        />
        
-          <FlatList
-            numColumns={2}
-            data={products.products}
-            renderItem={this.renderRow}
-            refreshing={products.isLoading}
-            onRefresh={this.onRefreshing}
-            keyExtractor={item => item.id.toString()}
-          />
+        </ScrollView>
 
-          <View
-            style={{
-              height: 54,
-              flexDirection: 'row',
-              justifyContent: 'center'
-            }}>
+
+  
+        <Footer>
+          <FooterTab>
             <Button
               vertical
-              info
-              onPress={() => this.props.navigation.navigate('Home')}>
+              onPress={() => this.props.navigation.navigate('HomeScreen')}>
               <Icon name="apps" />
-              <Text>Home</Text>
+              <Text>Apps</Text>
             </Button>
-
             <Button
               vertical
-              info
               onPress={() => this.props.navigation.navigate('Product')}>
               <Icon name="folder" />
-              <Text>Products</Text>
+              <Text>Product</Text>
             </Button>
-
             <Button
               vertical
-              info
               onPress={() => this.props.navigation.navigate('Category')}>
               <Icon name="document" />
               <Text>Category</Text>
             </Button>
-                  
-            <Button active badge vertical info
-              onPress={() => this.props.navigation.navigate('Cart')}
-              >
-                 <Badge >
+            <Button
+              badge
+              vertical
+              onPress={() => this.props.navigation.navigate('Cart')}>
+              <Badge>
                 <Text>{this.props.totalPurchase}</Text>
               </Badge>
-                <Icon active name="cart" style={{marginTop: -26}} />
-              <Text>Cart</Text>             
+              <Icon name="cart" />
+              <Text>Cart</Text>
             </Button>
-          </View>
-       
-      </ScrollView>
+          </FooterTab>
+        </Footer>
+        </View>
     );
   }
 }
+
+// const styles = StyleSheet.create({
+//   FlatList: {
+//     flex: 6,
+//   },
+
+// });
 
 const mapStateToProps = state => {
   return {

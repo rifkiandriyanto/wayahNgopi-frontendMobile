@@ -22,8 +22,6 @@ import {
   Badge,
   Icon,
   View,
-  Item,
-  Input,
 } from 'native-base';
 
 import {Col, Row, Grid} from 'react-native-easy-grid';
@@ -139,48 +137,38 @@ class Cart extends React.Component {
           <Col>
             <ViewCart />
           
-            
-          <View
-            style={{
-              height: 54,
-              flexDirection: 'row',
-              justifyContent: 'center'
-            }}>
-          
-          <Button
-              vertical
-              info
-              onPress={() => this.props.navigation.navigate('Home')}>
-              <Icon name="apps" />
-              <Text>Home</Text>
-            </Button>
-
+            <Footer>
+          <FooterTab>
             <Button
               vertical
-              info
+              onPress={() => this.props.navigation.navigate('HomeScreen')}>
+              <Icon name="apps" />
+              <Text>Apps</Text>
+            </Button>
+            <Button
+              vertical
               onPress={() => this.props.navigation.navigate('Product')}>
               <Icon name="folder" />
-              <Text>Products</Text>
+              <Text>Product</Text>
             </Button>
-
             <Button
               vertical
-              info
               onPress={() => this.props.navigation.navigate('Category')}>
               <Icon name="document" />
               <Text>Category</Text>
             </Button>
-                  
-            <Button active badge vertical info
-              onPress={() => this.props.navigation.navigate('Cart')}
-              >
-                 <Badge >
+            <Button
+              badge
+              vertical
+              onPress={() => this.props.navigation.navigate('Cart')}>
+              <Badge>
                 <Text>{this.props.totalPurchase}</Text>
               </Badge>
-                <Icon active name="cart" style={{marginTop: -26}} />
-              <Text>Cart</Text>             
+              <Icon name="cart" />
+              <Text>Cart</Text>
             </Button>
-          </View>
+          </FooterTab>
+        </Footer>
           
           </Col>
         </Grid>

@@ -2,12 +2,6 @@ import axios from 'axios';
 import {API_KEY} from 'react-native-dotenv';
 
 export const getProducts = () => {
-  // const limit = 6;
-  // const page = data.activePage || 1;
-  // const category = data.activeCategory || '';
-  // const name = data.searchName || '';
-  // const sortBy = data.sort || 'id';
-  // const sort = data.by || 'ASC';
   return {
     type: 'GET_PRODUCTS',
     payload: axios({
@@ -38,12 +32,12 @@ export const deleteProduct = productId => {
   };
 };
 
-export const updateProduct = (productId, data) => {
+export const updateProduct = (data, id) => {
   return {
     type: 'UPDATE_PRODUCT',
     payload: axios({
       method: 'PATCH',
-      url: `${API_KEY}/product/${productId}`,
+      url: `${API_KEY}/product/`+id,
       data: data,
     }),
   };

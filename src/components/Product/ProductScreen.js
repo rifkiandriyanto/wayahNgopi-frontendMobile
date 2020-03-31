@@ -1,8 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, TextInput, Text, TouchableOpacity, FlatList, Image} from 'react-native';
+import {View, TextInput, TouchableOpacity, FlatList, Image} from 'react-native';
 import Spinner from '../Spinner/Spinner';
 import {getProducts, deleteProduct} from '../redux/actions/product';
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  Text,
+  FooterTab,
+  Button,
+  Icon,
+  Badge,
+} from 'native-base';
+import { ScrollView } from 'react-native-gesture-handler';
 
 class ProductScreen extends Component {
   static navigationOptions = {
@@ -108,22 +120,65 @@ class ProductScreen extends Component {
     const {products} = this.props;
 
     return (
-      <View>
-        <TextInput
-          style={{borderWidth:1, borderColor:'#d2d9d5', borderRadius:25, paddingLeft:45, marginTop:30}}
+      <View style={{flex: 1, flexDirection: 'column'}}>
+       <TextInput
+          style={{
+            borderWidth: 1,
+            borderColor: '#d2d9d5',
+            borderRadius: 25,
+            paddingLeft: 45,
+            marginTop: 30,
+          }}
           placeholder="Search..."
-          onChangeText={ event => this.onChangeSearch (event) }
+          onChangeText={event => this.onChangeSearch(event)}
         />
         <Spinner isLoading={products.isLoading} />
-        <View style={{marginTop: 10, marginLeft: 10, marginBottom: 10}}>
-          <FlatList
+
+      <ScrollView>
+      <FlatList
             data={products.products}
             renderItem={this.renderRow}
             refreshing={products.isLoading}
             onRefresh={this.onRefreshing}
             keyExtractor={item => item.id.toString()}
           />
-        </View>
+
+      </ScrollView>
+      
+      
+
+        <Footer>
+          <FooterTab>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('HomeScreen')}>
+              <Icon name="apps" />
+              <Text>Apps</Text>
+            </Button>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Product')}>
+              <Icon name="folder" />
+              <Text>Product</Text>
+            </Button>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Category')}>
+              <Icon name="document" />
+              <Text>Category</Text>
+            </Button>
+            <Button
+              badge
+              vertical
+              onPress={() => this.props.navigation.navigate('Cart')}>
+              <Badge>
+                <Text>{this.props.totalPurchase}</Text>
+              </Badge>
+              <Icon name="cart" />
+              <Text>Cart</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </View>
     );
   }
@@ -132,6 +187,8 @@ class ProductScreen extends Component {
 const mapStateToProps = state => {
   return {
     products: state.products,
+    productsInCart: state.cart.cart,
+    totalPurchase: state.cart.totalPurchase,
   };
 };
 

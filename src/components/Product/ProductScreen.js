@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {View, TextInput, TouchableOpacity, FlatList, Image} from 'react-native';
-import Spinner from '../Spinner/Spinner';
 import {getProducts, deleteProduct} from '../redux/actions/product';
 import {
   Container,
@@ -11,14 +10,26 @@ import {
   Text,
   FooterTab,
   Button,
-  Icon,
   Badge,
+  Icon,
 } from 'native-base';
-import { ScrollView } from 'react-native-gesture-handler';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {ScrollView} from 'react-native-gesture-handler';
 
 class ProductScreen extends Component {
-  static navigationOptions = {
-    title: 'Product',
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: null,
+      // headerTransparent: true,
+      headerStyle: { backgroundColor: '#324191',},
+      headerLeft: null,
+      headerRight: () => (
+              <TouchableOpacity style={{marginRight:180}}
+                onPress={() => navigation.navigate('AddProduct')}>
+               <Ionicons name="ios-add-circle" size={40} color="#b6caff"></Ionicons>
+              </TouchableOpacity>
+            ),
+    };
   };
 
   state = {
@@ -29,24 +40,6 @@ class ProductScreen extends Component {
     activeCategory: '',
   };
 
-  static navigationOptions = ({navigation}) => {
-    return {
-      headerRight: () => (
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#1C3F94',
-            padding: 8,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 100,
-            marginRight: 20,
-          }}
-          onPress={() => navigation.navigate('AddProduct')}>
-          <Text style={{color: '#fff'}}>Add Product</Text>
-        </TouchableOpacity>
-      ),
-    };
-  };
 
   componentDidMount() {
     this.getProducts();
@@ -60,10 +53,10 @@ class ProductScreen extends Component {
   onChangeSearch = event => {
     const data = {
       activePage: 1,
-      activeCategory: "",
+      activeCategory: '',
       searchName: event,
       sort: this.state.sort,
-      by: this.state.by
+      by: this.state.by,
     };
     this.props.dispatch(getProducts(data));
   };
@@ -75,6 +68,28 @@ class ProductScreen extends Component {
   onRefreshing = () => {
     this.getProducts();
   };
+
+  convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 == 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp. ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('') +
+      ',-'
+    );
+  }
 
   renderRow = ({item}) => {
     return (
@@ -93,7 +108,7 @@ class ProductScreen extends Component {
             {item.name}
           </Text>
           <Text style={{fontSize: 15, marginLeft: 10, marginBottom: 18}}>
-            Stock {item.stock}
+            {this.convertToRupiah(item.price)}
           </Text>
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
@@ -103,12 +118,13 @@ class ProductScreen extends Component {
                   product: item,
                 })
               }>
-              <Text style={{fontSize: 17, color: 'orange'}}>Edit</Text>
+              <Ionicons name="ios-create" size={30} color="#869ac4"></Ionicons>
             </TouchableOpacity>
+
             <TouchableOpacity
               style={{marginLeft: 10}}
               onPress={this.onSubmit.bind(this, item.id)}>
-              <Text style={{fontSize: 17, color: 'red'}}>Delete</Text>
+              <Ionicons name="ios-trash" size={30} color="#637291"></Ionicons>
             </TouchableOpacity>
           </View>
         </View>
@@ -121,31 +137,31 @@ class ProductScreen extends Component {
 
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-       <TextInput
+
+        <View>
+        <TextInput
           style={{
             borderWidth: 1,
             borderColor: '#d2d9d5',
             borderRadius: 25,
             paddingLeft: 45,
-            marginTop: 30,
+            marginTop: 10,
           }}
           placeholder="Search..."
           onChangeText={event => this.onChangeSearch(event)}
         />
-        <Spinner isLoading={products.isLoading} />
+        </View>
+      
 
-      <ScrollView>
-      <FlatList
+        <ScrollView>
+          <FlatList
             data={products.products}
             renderItem={this.renderRow}
             refreshing={products.isLoading}
             onRefresh={this.onRefreshing}
             keyExtractor={item => item.id.toString()}
           />
-
-      </ScrollView>
-      
-      
+        </ScrollView>
 
         <Footer>
           <FooterTab>

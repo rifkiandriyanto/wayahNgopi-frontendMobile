@@ -1,11 +1,35 @@
 import React, {Component} from 'react';
-import {Text, TouchableOpacity, Image, StyleSheet, View} from 'react-native';
+import { TouchableOpacity, Image, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {logout} from '../redux/actions/auth';
 import {withNavigation} from 'react-navigation';
 import { getUser } from '../redux/actions/user'
+import avatar from '../Assets/avatar.png'
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  FooterTab,
+  Button,
+  Icon,
+  Text,
+  Badge,
+  Title,
+  Left,
+  Right,
+  Body,
+} from 'native-base';
 
 class Profile extends Component {
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: null,
+      headerStyle: {backgroundColor: '#324191'},
+      headerLeft: null,
+    };
+  };
+
   onLogout() {
     this.props.dispatch(logout());
     this.props.navigation.navigate('Home');
@@ -22,11 +46,11 @@ class Profile extends Component {
     const profile = this.props.auth.profile;
     return (
       <>
-        <View style={styles.container}>
+          <View style={{flex: 1, flexDirection: 'column'}}>
           <View style={styles.header}></View>
           <Image
             style={styles.avatar}
-            source={{uri: profile.image}}
+            source={avatar}
           />
           <View style={styles.body}>
             <View style={styles.bodyContent}>
@@ -45,6 +69,46 @@ class Profile extends Component {
               </TouchableOpacity>
             </View>
           </View>
+
+          <Footer
+              style={{
+             
+                flex: 1,
+               
+              }}>
+          <FooterTab>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('HomeScreen')}>
+              <Icon name="apps" />
+              <Text>Apps</Text>
+            </Button>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Product')}>
+              <Icon name="folder" />
+              <Text>Product</Text>
+            </Button>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Category')}>
+              <Icon name="document" />
+              <Text>Category</Text>
+            </Button>
+            <Button
+              badge
+              vertical
+              onPress={() => this.props.navigation.navigate('Cart')}>
+              <Badge>
+                <Text>{this.props.totalPurchase}</Text>
+              </Badge>
+              <Icon name="cart" />
+              <Text>Cart</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
+
+
         </View>
       </>
     );
@@ -53,8 +117,15 @@ class Profile extends Component {
 
 const styles = StyleSheet.create({
   header: {
-    backgroundColor: '#a5a6a8',
+    
+
     height: 200,
+  },
+  
+  container: {
+    flex: 1,
+     flexDirection: 'column'
+
   },
   avatar: {
     width: 130,

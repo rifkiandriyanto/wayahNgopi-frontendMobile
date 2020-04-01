@@ -1,29 +1,35 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {View, Image, Text, FlatList, TouchableOpacity} from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import {View, Image, FlatList, TouchableOpacity, ScrollView} from 'react-native';
 import Spinner from '../Spinner/Spinner';
+import {
+  Container,
+  Header,
+  Content,
+  Footer,
+  Text,
+  FooterTab,
+  Button,
+  Icon,
+  Badge,
+} from 'native-base';
 
 import {getCategories, deleteCategory} from '../redux/actions/category';
 
 class CategoryScreen extends Component {
-
-
   static navigationOptions = ({navigation}) => {
     return {
+      headerTitle: null,
+      // headerTransparent: true,
+      headerStyle: { backgroundColor: '#324191',},
+      headerLeft: null,
       headerRight: () => (
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#1C3F94',
-            padding: 8,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: 100,
-            marginRight: 20,
-          }}
-          onPress={() => navigation.navigate('AddCategory')}>
-          <Text style={{color: '#fff'}}>Add Category</Text>
-        </TouchableOpacity>
-      ),
+              <TouchableOpacity style={{marginRight:180}}
+                onPress={() => navigation.navigate('AddCategory')}>
+               <Ionicons name="ios-add-circle" size={40} color="#b6caff"></Ionicons>
+              </TouchableOpacity>
+            ),
     };
   };
 
@@ -83,9 +89,9 @@ class CategoryScreen extends Component {
     const {categories} = this.props;
 
     return (
-      <View>
+      <View style={{flex: 1, flexDirection: 'column'}}>
         <Spinner isLoading={categories.isLoading} />
-        <View style={{marginTop: 10, marginLeft: 10, marginBottom: 10}}>
+        <ScrollView>
           <FlatList
             data={categories.categories}
             renderItem={this.renderRow}
@@ -93,7 +99,40 @@ class CategoryScreen extends Component {
             onRefresh={this.onRefreshing}
             keyExtractor={item => item.id.toString()}
           />
-        </View>
+        </ScrollView>
+
+        <Footer>
+          <FooterTab>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('HomeScreen')}>
+              <Icon name="apps" />
+              <Text>Apps</Text>
+            </Button>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Product')}>
+              <Icon name="folder" />
+              <Text>Product</Text>
+            </Button>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Category')}>
+              <Icon name="document" />
+              <Text>Category</Text>
+            </Button>
+            <Button
+              badge
+              vertical
+              onPress={() => this.props.navigation.navigate('Cart')}>
+              <Badge>
+                <Text>{this.props.totalPurchase}</Text>
+              </Badge>
+              <Icon name="cart" />
+              <Text>Cart</Text>
+            </Button>
+          </FooterTab>
+        </Footer>
       </View>
     );
   }
@@ -102,6 +141,8 @@ class CategoryScreen extends Component {
 const mapStateToProps = state => {
   return {
     categories: state.categories,
+    productsInCart: state.cart.cart,
+    totalPurchase: state.cart.totalPurchase,
   };
 };
 

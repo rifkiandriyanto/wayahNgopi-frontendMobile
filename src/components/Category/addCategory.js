@@ -5,6 +5,10 @@ import {postCategory} from '../redux/actions/category'
 import Spinner from '../Spinner/Spinner';
 
 class AddCategory extends Component {
+    static navigationOptions = {
+    title: 'Add Category',
+  };
+
   state = {
     name: '',
   };

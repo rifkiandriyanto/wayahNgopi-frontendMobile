@@ -21,15 +21,34 @@ import {
   Icon,
   Text,
   Badge,
+  Title,
+  Left,
+  Right,
+  Body,
 } from 'native-base';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import Spinner from '../Spinner/Spinner';
 
 import {getProducts} from '../redux/actions/product';
 
 class HomeScreen extends Component {
-  static navigationOptions = {
-    header: null,
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: null,
+      // headerTransparent: true,
+      headerStyle: {backgroundColor: '#324191'},
+      headerLeft: null,
+      // headerRight: () => (
+      //         <TouchableOpacity style={{marginRight:180}}
+      //           onPress={() => navigation.navigate('AddProduct')}>
+      //          <Ionicons name="ios-add-circle" size={40} color="#b6caff"></Ionicons>
+      //         </TouchableOpacity>
+      //       ),
+    };
   };
+  // static navigationOptions = {
+  //   header: null,
+  // };
 
   state = {
     activePage: 1,
@@ -85,31 +104,58 @@ class HomeScreen extends Component {
     this.getProducts();
   };
 
+  convertToRupiah(angka) {
+    var rupiah = '';
+    var angkarev = angka
+      .toString()
+      .split('')
+      .reverse()
+      .join('');
+    for (var i = 0; i < angkarev.length; i++) {
+      if (i % 3 == 0) {
+        rupiah += angkarev.substr(i, 3) + '.';
+      }
+    }
+    return (
+      'Rp. ' +
+      rupiah
+        .split('', rupiah.length - 1)
+        .reverse()
+        .join('') +
+      ',-'
+    );
+  }
+
   renderRow = ({item}) => {
     return (
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          flexDirection: 'column',
-        }}>
-        <Image
-          source={{uri: item.image}}
+      <>
+        <View
           style={{
-            height: 135,
-            width: 155,
-            borderRadius: 10,
-          }}
-        />
-        <View style={{padding: 10, width: 155}}>
-          <Text style={{color: '#777', paddingTop: 0}}>{item.name}</Text>
-          <Text style={{color: '#777', paddingTop: 0}}>Rp.{item.price}</Text>
-          <Button small bordered info onPress={() => this.addToCart(item)}>
-            <Text> Add to cart </Text>
-          </Button>
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexDirection: 'column',
+          }}>
+          <Image
+            source={{uri: item.image}}
+            style={{
+              height: 135,
+              width: 155,
+              borderRadius: 10,
+            }}
+          />
+          <View style={{padding: 5, width: 80}}>
+            <Text style={{color: '#777', paddingTop: 0}}>{item.name}</Text>
+            <Text style={{color: '#777', paddingTop: 0}}>
+              {this.convertToRupiah(item.price)}
+            </Text>
+            <Button iconLeft small onPress={() => this.addToCart(item)}>
+              <Ionicons name="ios-cart" size={50} color="#b6caff"></Ionicons>
+              <Text>Add To Cart</Text>
+            </Button>
+          </View>
         </View>
-      </View>
+      </>
     );
   };
 
@@ -119,34 +165,30 @@ class HomeScreen extends Component {
 
     return (
       <View style={{flex: 1, flexDirection: 'column'}}>
-      <ScrollView>
-        <TextInput
-          style={{
-            borderWidth: 1,
-            borderColor: '#d2d9d5',
-            borderRadius: 25,
-            paddingLeft: 45,
-            marginTop: 30,
-          }}
-          placeholder="Search..."
-          onChangeText={event => this.onChangeSearch(event)}
-        />
-        <Spinner isLoading={products.isLoading} />
-
-        
-        <FlatList
-          numColumns={2}
-          data={products.products}
-          renderItem={this.renderRow}
-          refreshing={products.isLoading}
-          onRefresh={this.onRefreshing}
-          keyExtractor={item => item.id.toString()}
-        />
-       
+        <View>
+          <TextInput
+            style={{
+              borderWidth: 1,
+              borderColor: '#d2d9d5',
+              borderRadius: 25,
+              paddingLeft: 45,
+              marginTop: 10,
+            }}
+            placeholder="Search..."
+            onChangeText={event => this.onChangeSearch(event)}
+          />
+        </View>
+        <ScrollView>
+          <FlatList
+            numColumns={2}
+            data={products.products}
+            renderItem={this.renderRow}
+            refreshing={products.isLoading}
+            onRefresh={this.onRefreshing}
+            keyExtractor={item => item.id.toString()}
+          />
         </ScrollView>
 
-
-  
         <Footer>
           <FooterTab>
             <Button
@@ -162,12 +204,6 @@ class HomeScreen extends Component {
               <Text>Product</Text>
             </Button>
             <Button
-              vertical
-              onPress={() => this.props.navigation.navigate('Category')}>
-              <Icon name="document" />
-              <Text>Category</Text>
-            </Button>
-            <Button
               badge
               vertical
               onPress={() => this.props.navigation.navigate('Cart')}>
@@ -177,19 +213,16 @@ class HomeScreen extends Component {
               <Icon name="cart" />
               <Text>Cart</Text>
             </Button>
+            <Button vertical  onPress={() => this.props.navigation.navigate('Profile')}>
+              <Icon name="person" />
+              <Text>User</Text>
+            </Button>
           </FooterTab>
         </Footer>
-        </View>
+      </View>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   FlatList: {
-//     flex: 6,
-//   },
-
-// });
 
 const mapStateToProps = state => {
   return {

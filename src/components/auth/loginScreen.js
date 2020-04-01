@@ -8,6 +8,9 @@ import {connect} from 'react-redux';
 
 import { withNavigation } from 'react-navigation';
 class LoginScreen extends Component {
+  static navigationOptions = {
+    header: null,
+  };
   render() {
     if (!this.props.auth.isAuthenticated){
       return (

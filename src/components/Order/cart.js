@@ -1,8 +1,9 @@
 /* eslint-disable no-undef */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {Component} from 'react';
 import {AsyncStorage, Image, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
+import Empety from '../Assets/empty.png'
 
 import {
   Container,
@@ -28,7 +29,10 @@ import {Col, Row, Grid} from 'react-native-easy-grid';
 
 import {FlatList} from 'react-native-gesture-handler';
 import {manipulateItem, deleteCart} from '../redux/actions/cart';
-class Cart extends React.Component {
+class Cart extends Component {
+  static navigationOptions = {
+    header: null,
+  };
 
   addQuantity = data => {
     if (data.quantity < data.stock) {
@@ -51,7 +55,7 @@ class Cart extends React.Component {
       if (this.props.productsInCart.length < 1) {
         return (
           <Content>
-            {/* <Image source={Bg} style={{flex: 1, width: 360}} /> */}
+            <Image source={Empety} style={{flex: 1, width: 360}} />
           </Content>
         );
       } else {
@@ -152,12 +156,6 @@ class Cart extends React.Component {
               <Text>Product</Text>
             </Button>
             <Button
-              vertical
-              onPress={() => this.props.navigation.navigate('Category')}>
-              <Icon name="document" />
-              <Text>Category</Text>
-            </Button>
-            <Button
               badge
               vertical
               onPress={() => this.props.navigation.navigate('Cart')}>
@@ -166,6 +164,10 @@ class Cart extends React.Component {
               </Badge>
               <Icon name="cart" />
               <Text>Cart</Text>
+            </Button>
+            <Button vertical>
+              <Icon name="person" />
+              <Text>User</Text>
             </Button>
           </FooterTab>
         </Footer>

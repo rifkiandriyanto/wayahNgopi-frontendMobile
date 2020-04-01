@@ -149,10 +149,15 @@ class HomeScreen extends Component {
             <Text style={{color: '#777', paddingTop: 0}}>
               {this.convertToRupiah(item.price)}
             </Text>
-            <Button iconLeft small onPress={() => this.addToCart(item)}>
-              <Ionicons name="ios-cart" size={50} color="#b6caff"></Ionicons>
-              <Text>Add To Cart</Text>
-            </Button>
+            <View>
+              <Button
+                iconLeft
+                style={{padding: 5}}
+                onPress={() => this.addToCart(item)}>
+                <Ionicons name="ios-cart" size={20} color="#b6caff"></Ionicons>
+                <Text>Add</Text>
+              </Button>
+            </View>
           </View>
         </View>
       </>
@@ -172,7 +177,7 @@ class HomeScreen extends Component {
               borderColor: '#d2d9d5',
               borderRadius: 25,
               paddingLeft: 45,
-              marginTop: 10,
+              marginTop: 5,
             }}
             placeholder="Search..."
             onChangeText={event => this.onChangeSearch(event)}
@@ -188,6 +193,10 @@ class HomeScreen extends Component {
             keyExtractor={item => item.id.toString()}
           />
         </ScrollView>
+
+        <Container>
+          <Header noShadow />
+        </Container>
 
         <Footer>
           <FooterTab>
@@ -213,7 +222,9 @@ class HomeScreen extends Component {
               <Icon name="cart" />
               <Text>Cart</Text>
             </Button>
-            <Button vertical  onPress={() => this.props.navigation.navigate('Profile')}>
+            <Button
+              vertical
+              onPress={() => this.props.navigation.navigate('Profile')}>
               <Icon name="person" />
               <Text>User</Text>
             </Button>

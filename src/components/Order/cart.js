@@ -30,8 +30,20 @@ import {Col, Row, Grid} from 'react-native-easy-grid';
 import {FlatList} from 'react-native-gesture-handler';
 import {manipulateItem, deleteCart} from '../redux/actions/cart';
 class Cart extends Component {
-  static navigationOptions = {
-    header: null,
+
+  static navigationOptions = ({navigation}) => {
+    return {
+      headerTitle: null,
+      // headerTransparent: true,
+      headerStyle: {backgroundColor: '#324191'},
+      headerLeft: null,
+      // headerRight: () => (
+      //         <TouchableOpacity style={{marginRight:180}}
+      //           onPress={() => navigation.navigate('AddProduct')}>
+      //          <Ionicons name="ios-add-circle" size={40} color="#b6caff"></Ionicons>
+      //         </TouchableOpacity>
+      //       ),
+    };
   };
 
   addQuantity = data => {

@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import { TouchableOpacity, Image, StyleSheet, View} from 'react-native';
+import {TouchableOpacity, Image, StyleSheet, View} from 'react-native';
 import {connect} from 'react-redux';
 import {logout} from '../redux/actions/auth';
 import {withNavigation} from 'react-navigation';
-import { getUser } from '../redux/actions/user'
-import avatar from '../Assets/avatar.png'
+import {getUser} from '../redux/actions/user';
+import avatar from '../Assets/avatar.png';
 import {
   Container,
   Header,
@@ -35,98 +35,78 @@ class Profile extends Component {
     this.props.navigation.navigate('Home');
   }
 
- componentDidMount (){
-    const id = this.props.auth.profile.id
-    this.props.dispatch(getUser(id))
+  componentDidMount() {
+    const id = this.props.auth.profile.id;
+    this.props.dispatch(getUser(id));
   }
 
   render() {
-    const { user } = this.props
-    console.log(user)
+    const {user} = this.props;
+    console.log(user);
     const profile = this.props.auth.profile;
     return (
       <>
-          <View style={{flex: 1, flexDirection: 'column'}}>
-          <View style={styles.header}></View>
-          <Image
-            style={styles.avatar}
-            source={avatar}
-          />
-          <View style={styles.body}>
-            <View style={styles.bodyContent}>
-              <Text style={styles.name}>{profile.name}</Text>
-              <Text style={styles.info}>Username: {profile.username}</Text>
-              <Text style={styles.description}>email: {profile.email}</Text>
-              <TouchableOpacity
+        <Container>
+          <Content>
+            <Image style={styles.avatar} source={avatar} />
+            <View style={styles.body}>
+              <View style={styles.bodyContent}>
+                <Text style={styles.name}>{profile.name}</Text>
+                <Text style={styles.info}>Username: {profile.username}</Text>
+                <Text style={styles.description}>email: {profile.email}</Text>
+                {/* <TouchableOpacity
                 style={styles.buttonContainer}
-                onPress={()=>this.props.navigation.navigate('profileUser')}>
+                onPress={() => this.props.navigation.navigate('profileUser')}>
                 <Text>Edit Image</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => this.onLogout()}>
-                <Text>Logout</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+                <TouchableOpacity
+                  style={styles.buttonContainer}
+                  onPress={() => this.onLogout()}>
+                  <Text>Logout</Text>
+                </TouchableOpacity>
+              </View>
             </View>
-          </View>
+          </Content>
 
-          <Footer
-              style={{
-             
-                flex: 1,
-               
-              }}>
-          <FooterTab>
-            <Button
-              vertical
-              onPress={() => this.props.navigation.navigate('HomeScreen')}>
-              <Icon name="apps" />
-              <Text>Apps</Text>
-            </Button>
-            <Button
-              vertical
-              onPress={() => this.props.navigation.navigate('Product')}>
-              <Icon name="folder" />
-              <Text>Product</Text>
-            </Button>
-            <Button
-              vertical
-              onPress={() => this.props.navigation.navigate('Category')}>
-              <Icon name="document" />
-              <Text>Category</Text>
-            </Button>
-            <Button
-              badge
-              vertical
-              onPress={() => this.props.navigation.navigate('Cart')}>
-              <Badge>
-                <Text>{this.props.totalPurchase}</Text>
-              </Badge>
-              <Icon name="cart" />
-              <Text>Cart</Text>
-            </Button>
-          </FooterTab>
-        </Footer>
-
-
-        </View>
+          <Footer>
+            <FooterTab>
+              <Button
+                vertical
+                onPress={() => this.props.navigation.navigate('HomeScreen')}>
+                <Icon name="apps" />
+                <Text>Apps</Text>
+              </Button>
+              <Button
+                vertical
+                onPress={() => this.props.navigation.navigate('Product')}>
+                <Icon name="folder" />
+                <Text>Product</Text>
+              </Button>
+              <Button
+                badge
+                vertical
+                onPress={() => this.props.navigation.navigate('Cart')}>
+                <Badge>
+                  <Text>{this.props.totalPurchase}</Text>
+                </Badge>
+                <Icon name="cart" />
+                <Text>Cart</Text>
+              </Button>
+              <Button
+                vertical
+                onPress={() => this.props.navigation.navigate('Profile')}>
+                <Icon name="person" />
+                <Text>User</Text>
+              </Button>
+            </FooterTab>
+          </Footer>
+        </Container>
       </>
     );
   }
 }
 
 const styles = StyleSheet.create({
-  header: {
-    
-
-    height: 200,
-  },
-  
-  container: {
-    flex: 1,
-     flexDirection: 'column'
-
-  },
   avatar: {
     width: 130,
     height: 130,
@@ -143,13 +123,11 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontWeight: '600',
   },
-  body: {
-    marginTop: 40,
-  },
   bodyContent: {
     flex: 1,
+    marginTop: 10,
     alignItems: 'center',
-    padding: 30,
+    padding: 20,
   },
   name: {
     fontSize: 28,
@@ -168,12 +146,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   buttonContainer: {
-    marginTop: 10,
+    marginTop: 150,
     height: 45,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
     width: 250,
     borderRadius: 30,
     backgroundColor: '#f1a98c',
@@ -183,7 +160,9 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     auth: state.auth,
-    user: state.user.user
+    user: state.user.user,
+    productsInCart: state.cart.cart,
+    totalPurchase: state.cart.totalPurchase,
   };
 };
 export default withNavigation(connect(mapStateToProps)(Profile));

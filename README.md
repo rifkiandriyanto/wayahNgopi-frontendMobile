@@ -23,16 +23,16 @@
 ![Product](Images/1.png)
 
 - <b> Home </b>
-![Home](Images/4.JPG)
+![Home](Images/4.png)
 
 - <b> Cart </b>
-![Cart](Images/2.JPG)
+![Cart](Images/2.png)
 
 - <b> Payment </b>
-![Payment](Images/5.JPG)
+![Payment](Images/5.png)
 
 - <b> Profile </b>
-![Profile](Images/3.JPG)
+![Profile](Images/3.png)
 
 
 ## APK RELEASE

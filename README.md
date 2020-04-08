@@ -36,7 +36,7 @@
 
 
 ## APK RELEASE
-![APK](bit.ly/ngopiAPK)
+![APK](http://bit.ly/ngopiAPK)
 
 ## Table Of Contents
 *  [Intro](#Intro)

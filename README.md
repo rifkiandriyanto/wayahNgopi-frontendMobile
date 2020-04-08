@@ -35,9 +35,6 @@
 ![Profile](Images/3.png)
 
 
-## APK RELEASE
-![APK](http://bit.ly/ngopiAPK)
-
 ## Table Of Contents
 *  [Intro](#Intro)
 *  [Requirments](#Requirments)

@@ -54,16 +54,11 @@ class Profile extends Component {
                 <Text style={styles.name}>{profile.name}</Text>
                 <Text style={styles.info}>Username: {profile.username}</Text>
                 <Text style={styles.description}>email: {profile.email}</Text>
-                {/* <TouchableOpacity
-                style={styles.buttonContainer}
-                onPress={() => this.props.navigation.navigate('profileUser')}>
-                <Text>Edit Image</Text>
-              </TouchableOpacity> */}
-                <TouchableOpacity
+                <Button
                   style={styles.buttonContainer}
                   onPress={() => this.onLogout()}>
                   <Text>Logout</Text>
-                </TouchableOpacity>
+                </Button>
               </View>
             </View>
           </Content>
@@ -153,7 +148,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: 250,
     borderRadius: 30,
-    backgroundColor: '#f1a98c',
   },
 });
 

@@ -35,21 +35,11 @@ class HomeScreen extends Component {
   static navigationOptions = ({navigation}) => {
     return {
       headerTitle: null,
-      // headerTransparent: true,
       headerStyle: {backgroundColor: '#324191'},
       headerLeft: null,
-      // headerRight: () => (
-      //         <TouchableOpacity style={{marginRight:180}}
-      //           onPress={() => navigation.navigate('AddProduct')}>
-      //          <Ionicons name="ios-add-circle" size={40} color="#b6caff"></Ionicons>
-      //         </TouchableOpacity>
-      //       ),
     };
   };
-  // static navigationOptions = {
-  //   header: null,
-  // };
-
+  
   state = {
     activePage: 1,
     sort: 'id',

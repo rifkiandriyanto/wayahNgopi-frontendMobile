@@ -37,12 +37,6 @@ class Cart extends Component {
       // headerTransparent: true,
       headerStyle: {backgroundColor: '#324191'},
       headerLeft: null,
-      // headerRight: () => (
-      //         <TouchableOpacity style={{marginRight:180}}
-      //           onPress={() => navigation.navigate('AddProduct')}>
-      //          <Ionicons name="ios-add-circle" size={40} color="#b6caff"></Ionicons>
-      //         </TouchableOpacity>
-      //       ),
     };
   };
 

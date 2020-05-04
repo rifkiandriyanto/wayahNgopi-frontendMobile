@@ -36,7 +36,7 @@
     "redux-promise-middleware": "^6.1.2"
   },
   "devDependencies": {
-    "@babel/core": "7.9.0",
+    "@babel/core": "7.9.6",
     "@babel/runtime": "7.9.2",
     "@react-native-community/eslint-config": "1.0.0",
     "babel-jest": "25.3.0",

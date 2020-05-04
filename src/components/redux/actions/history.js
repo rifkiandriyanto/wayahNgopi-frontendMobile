@@ -6,7 +6,7 @@ export const getHistory = () => {
     type: 'GET_HISTORY',
     payload: axios({
       method: 'GET',
-      URL: `${API_KEY}/transaction`,
+      URL: `${API_KEY}/transaction/history`,
     }),
   };
 };
@@ -16,7 +16,17 @@ export const getDetailHistory = id => {
     type: 'GET_DETAIL_HISTORY',
     payload: axios({
       method: 'GET',
-      url: `${API_KEY}/transaction` + id,
+      url: `${API_KEY}/transaction/history/` + id,
+    }),
+  };
+};
+
+export const getWeeklyHistory = () => {
+  return {
+    type: 'GET_WEEKLY_HISTORY',
+    payload: axios({
+      method: 'GET',
+      url: `${API_KEY}/transaction/history/weekly`,
     }),
   };
 };
